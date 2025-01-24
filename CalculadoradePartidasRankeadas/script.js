@@ -1,42 +1,26 @@
 const entrada = require('prompt-sync')({sigint: true});
 
-let vitorias = entrada('Digite a quantidade de vitorias: ');
-let derrotas = entrada('Digite a quantidade de derrotas: ');
-let saldoVitorias = getSaldo(vitorias, derrotas);
-
-function getSaldo(vitorias, derrotas) {
-    let saldoVitorias = vitorias - derrotas;
-    return saldoVitorias;
+function getValor(mensagem) {
+    let valor = parseInt(entrada(mensagem));
+    while(isNaN(valor) || valor < 0) {
+        console.log("Digite um numero valido (maior ou igual a zero)");
+        valor = parseInt(entrada(mensagem));
+    }
+    return valor;
 }
 
+const vitorias = getValor('Digite a quantidade de vitorias: ');
+const derrotas = getValor('Digite a quantidade de derrotas: ');
+const saldoVitorias = vitorias - derrotas;
+
 function getNivel(saldoVitorias) {
-    switch (true) {
-    case (saldoVitorias < 10):
-        nivel = "Ferro";
-        break;
-    case (saldoVitorias >=11 && saldoVitorias <= 20):
-        nivel = "Bronze";
-        break;
-    case (saldoVitorias >=21 && saldoVitorias <= 50):
-        nivel = "Prata";
-        break;
-    case (saldoVitorias >=51 && saldoVitorias <= 80):
-        nivel = "Ouro";
-        break;
-    case (saldoVitorias >=81 && saldoVitorias <= 90):
-        nivel = "Diamante";
-        break;
-    case (saldoVitorias >=91 && saldoVitorias <= 100):
-        nivel = "Lendário";
-        break;
-    case (saldoVitorias >=101):
-        nivel = "Imortal";
-        break;
-    default:
-        nivel = "Valor incorreto";
-        break;
-    }
-        return nivel;
+    if (saldoVitorias < 10) return "Ferro";
+    if (saldoVitorias <= 20) return "Bronze";
+    if (saldoVitorias <= 50) return "Prata";
+    if (saldoVitorias <= 80) return "Ouro";
+    if (saldoVitorias <= 90) return "Diamante";
+    if (saldoVitorias <= 100) return "Lendário";
+    return "Imortal";
     }
     
 console.log(`O Herói tem um saldo de ${saldoVitorias} vitórias e está no rank ${getNivel(saldoVitorias)}`);
